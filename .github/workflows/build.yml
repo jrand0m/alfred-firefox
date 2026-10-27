@@ -32,10 +32,11 @@ jobs:
       - name: Build workflow and extension
         run: just build all
 
-      - name: Verify binary is arm64
+      - name: Verify binary is universal
         run: |
-          file build/alfred-firefox
-          file build/alfred-firefox | grep -q arm64
+          lipo -archs build/alfred-firefox
+          lipo -archs build/alfred-firefox | grep -q arm64
+          lipo -archs build/alfred-firefox | grep -q x86_64
 
       - uses: actions/upload-artifact@v4
         with:
