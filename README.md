@@ -22,6 +22,23 @@ The workflow supports Alfred 4+ and the extension works with (at least) Firefox,
 See [the setup documentation][setup] for more details.
 
 
+Building from source
+--------------------
+
+You need [Go][go] (the version in `go.mod`) and `make`, which ships with macOS (Xcode Command Line Tools). Everything else, including the [Mage][mage] build tool, is fetched by Go on first use; Alfred does not need to be installed.
+
+```sh
+make test              # go vet + go test
+make dist              # universal (Apple Silicon + Intel) .alfredworkflow in ./dist
+make build-workflow    # build for this machine only (faster)
+make build-extension   # Firefox extension (.xpi) in ./dist
+make link              # symlink the build into Alfred (development)
+make help              # list all targets
+```
+
+Double-click the `.alfredworkflow` in `dist/` to install it. To develop against a live Alfred, run `make link` to symlink the build directory into Alfred's workflows folder (set `alfred_preferences` to your `Alfred.alfredpreferences` path if it is not detected).
+
+
 Usage
 -----
 
@@ -57,6 +74,7 @@ This workflow and extension are released under the [MIT licence][licence].
 It is written in [Go][go] and heavily based on the [AwGo library][awgo]. The icons are based on [Font Awesome][fontawesome].
 
 
+[mage]: https://magefile.org
 [addon]: https://addons.mozilla.org/en-US/firefox/addon/alfred-launcher-integration/
 [licence]: https://github.com/deanishe/alfred-firefox/blob/master/LICENCE.txt
 [workflow]: https://github.com/deanishe/alfred-firefox/releases/latest
