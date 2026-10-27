@@ -25,18 +25,18 @@ See [the setup documentation][setup] for more details.
 Building from source
 --------------------
 
-You need [Go][go] (the version in `go.mod`) and `make`, which ships with macOS (Xcode Command Line Tools). Everything else, including the [Mage][mage] build tool, is fetched by Go on first use; Alfred does not need to be installed.
+You only need [Go][go] (the version in `go.mod`). Builds are driven by [Mage][mage], which Go fetches on first use, so there is nothing else to install and Alfred does not need to be present.
 
 ```sh
-make test              # go vet + go test
-make dist              # universal (Apple Silicon + Intel) .alfredworkflow in ./dist
-make build-workflow    # build for this machine only (faster)
-make build-extension   # Firefox extension (.xpi) in ./dist
-make link              # symlink the build into Alfred (development)
-make help              # list all targets
+go run github.com/magefile/mage -l        # list all targets
+go run github.com/magefile/mage test      # go vet + go test
+go run github.com/magefile/mage dist      # universal (Apple Silicon + Intel) .alfredworkflow in ./dist
+go run github.com/magefile/mage build     # build for this machine only (faster)
+go run github.com/magefile/mage extension # Firefox extension (.xpi) in ./dist
+go run github.com/magefile/mage link      # symlink the build into Alfred (development)
 ```
 
-Double-click the `.alfredworkflow` in `dist/` to install it. To develop against a live Alfred, run `make link` to symlink the build directory into Alfred's workflows folder (set `alfred_preferences` to your `Alfred.alfredpreferences` path if it is not detected).
+Double-click the `.alfredworkflow` in `dist/` to install it. `link` needs Alfred to be detectable; if it isn't, set `alfred_preferences` to the path of your `Alfred.alfredpreferences`. If you have Mage installed, you can run `mage dist` etc. directly.
 
 
 Usage
