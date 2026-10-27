@@ -11,7 +11,7 @@ mage := "go run github.com/magefile/mage"
 default:
     @just --list
 
-# just build workflow|extension|all [native|universal]
+# just build workflow|extension|all [native|universal]  (all = universal workflow)
 build target="all" arch="native":
     #!/usr/bin/env zsh
     set -eu
@@ -23,7 +23,7 @@ build target="all" arch="native":
       *) echo "unknown target: {{target}} (workflow|extension|all)"; exit 1 ;;
     esac
 
-# just dist all  (universal .alfredworkflow + .xpi into ./dist)
+# just dist all  (single universal .alfredworkflow into ./dist; extension: just build extension)
 dist target="all":
     just build {{target}} universal
 

@@ -40,8 +40,8 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: alfred-firefox-arm64
-          path: dist/*
+          name: alfred-firefox-universal
+          path: dist/*.alfredworkflow
           if-no-files-found: error
 
   release:
@@ -53,8 +53,8 @@ jobs:
     steps:
       - uses: actions/download-artifact@v5
         with:
-          name: alfred-firefox-arm64
+          name: alfred-firefox-universal
           path: dist
       - uses: softprops/action-gh-release@v2
         with:
-          files: dist/*
+          files: dist/*.alfredworkflow
