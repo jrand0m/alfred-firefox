@@ -37,7 +37,13 @@ var (
 func init() {
 	var err error
 	if info, err = build.NewInfo(); err != nil {
-		panic(err)
+		// Alfred isn't installed/configured (e.g. on CI), which is fine for
+		// everything except Link. Point at a throwaway preferences dir.
+		os.Setenv("alfred_preferences", filepath.Join(os.TempDir(), "alfred-firefox", "Alfred.alfredpreferences"))
+		os.Setenv("alfred_version", "5")
+		if info, err = build.NewInfo(); err != nil {
+			panic(err)
+		}
 	}
 }
 
@@ -55,6 +61,14 @@ var Aliases = map[string]interface{}{
 func Dist() {
 	mg.Deps(cleanBuild, Deps)
 	mg.SerialDeps(Universal, Export)
+}
+
+// Test run go vet and go test
+func Test() error {
+	if err := sh.RunV("go", "vet", "./..."); err != nil {
+		return err
+	}
+	return sh.RunV("go", "test", "./...")
 }
 
 // Extension build browser extension in dist directory
