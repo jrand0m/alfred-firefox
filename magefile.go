@@ -51,10 +51,10 @@ var Aliases = map[string]interface{}{
 // If not set, running mage will list available targets
 // var Default = Build
 
-// Dist build & export workflow
+// Dist build & export a universal workflow in dist directory
 func Dist() {
 	mg.Deps(cleanBuild, Deps)
-	mg.SerialDeps(Universal, Export, Extension)
+	mg.SerialDeps(Universal, Export)
 }
 
 // Extension build browser extension in dist directory
